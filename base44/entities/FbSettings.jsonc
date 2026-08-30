@@ -1,0 +1,55 @@
+{
+  "name": "FbSettings",
+  "type": "object",
+  "properties": {
+    "user_token": {
+      "type": "string",
+      "description": "Facebook user access token"
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_token"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

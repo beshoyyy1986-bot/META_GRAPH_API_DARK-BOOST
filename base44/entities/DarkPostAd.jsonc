@@ -1,0 +1,150 @@
+{
+  "name": "DarkPostAd",
+  "type": "object",
+  "properties": {
+    "page_id": {
+      "type": "string"
+    },
+    "page_name": {
+      "type": "string"
+    },
+    "ad_account_id": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "targeting_mode": {
+      "type": "string",
+      "enum": [
+        "countries",
+        "regions"
+      ],
+      "default": "countries"
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "genders": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "age_min": {
+      "type": "number",
+      "default": 18
+    },
+    "age_max": {
+      "type": "number",
+      "default": 65
+    },
+    "daily_budget_usd": {
+      "type": "number"
+    },
+    "days": {
+      "type": "number",
+      "default": 0,
+      "description": "0 = ongoing"
+    },
+    "start_after_minutes": {
+      "type": "number",
+      "default": 10
+    },
+    "scheduled_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fb_campaign_id": {
+      "type": "string"
+    },
+    "fb_adset_id": {
+      "type": "string"
+    },
+    "fb_ad_id": {
+      "type": "string"
+    },
+    "fb_creative_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "created",
+        "failed"
+      ],
+      "default": "draft"
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "page_id",
+    "ad_account_id",
+    "message"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
