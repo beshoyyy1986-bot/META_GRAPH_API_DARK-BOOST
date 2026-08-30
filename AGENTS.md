@@ -26,6 +26,13 @@ npx skills add base44/skills
 
 ## Working Notes
 
+- This is a frontend-only Vite + React app that talks to the Base44 hosted backend via `@base44/vite-plugin` (proxies `/api` requests).
+- The dev environment runs via `docker-compose.base44.yml` — a `node:22-slim` container with the source bind-mounted, running `npx vite --host 0.0.0.0 --port 5173` (host port 3000 → container 5173).
+- Dependencies install inside a named volume (`node_modules`) on first boot; subsequent restarts are fast.
+- Required env vars for the backend: `VITE_BASE44_APP_ID`, `VITE_BASE44_APP_BASE_URL` (your deployed Base44 app URL). Without these the frontend renders but all `/api` calls fail. Optional: `VITE_BASE44_FUNCTIONS_VERSION`.
+- Vite is configured with `server.host: true` and `server.allowedHosts: true` so the preview's external hostname works.
+- Verify the app: `curl -sf -H "Host: external-preview.example.com" http://localhost:3000/` should return the HTML page.
+
 - Use `base44 dev` as the default local development command when you need the local Base44 backend. It can run the backend and frontend together.
 - When docs or code mention the frontend being started automatically, that usually means the Base44 project config includes `site.serveCommand`, for example `"serveCommand": "npm run dev"` in `base44/config.jsonc`.
 - Use `npm run dev` only for frontend-only work against the hosted Base44 backend.
